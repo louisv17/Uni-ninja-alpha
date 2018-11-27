@@ -9,6 +9,9 @@
 import SpriteKit
 import GameplayKit
 
+var player = SKSpriteNode?()
+var
+
 class GameScene: SKScene {
     
     private var label : SKLabelNode?

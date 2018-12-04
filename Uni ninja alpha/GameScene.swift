@@ -1,16 +1,6 @@
-//
-//  GameScene.swift
-//  Uni ninja alpha
-//
-//  Created by Louis Osmany (s5113237) on 27/11/2018.
-//  Copyright © 2018 Louis Osmany (s5113237). All rights reserved.
-//
-
 import SpriteKit
 import GameplayKit
 
-var player = SKSpriteNode?()
-var
 
 class GameScene: SKScene {
     
@@ -19,26 +9,62 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+//        // Get label node from scene and store it for use later
+//        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
+//        if let label = self.label {
+//            label.alpha = 0.0
+//            label.run(SKAction.fadeIn(withDuration: 2.0))
+//        }
+//
+////        // Create shape node to use during mouse interaction
+////        let w = (self.size.width + self.size.height) * 0.05
+////        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+////
+////        if; let spinnyNode = self.spinnyNode {
+////            self.spinnyNode.lineWidth = 2.5
+//
+//            self.spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
+//                                              SKAction.fadeOut(withDuration: 0.5),
+//                                              SKAction.removeFromParent()]))
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+                var score = 0
+                
+                func addRandomNode() {
+                    
+                    let randomX = arc4random_uniform(UInt32(frame.width))
+                    let randomY = arc4random_uniform(UInt32(frame.height))
+                    
+                    
+                    let spaceship = SKSpriteNode(imageNamed: "spaceship")
+                    spaceship.position = CGPoint(x: CGFloat(randomX), y: CGFloat(randomY))
+                    spaceship.xScale = 0.2
+                    spaceship.yScale = 0.2
+                    addChild(spaceship)
+                    
+                    
+                }
+                
+                func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+                    
+                    addRandomNode()
+                    
+                    for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+                    
+                    let touch = touches.first! as UITouch
+                    let positionInScene = touch.location(in: self)
+                    
+                    let touchedNodes = self.nodes(at: positionInScene)
+                    
+                    for node in touchedNodes {
+                        node.removeFromParent()
+                        score += 5
+                    }
+                    
+                    print(score)
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
         }
     }
+    
     
     
     func touchDown(atPoint pos : CGPoint) {
@@ -90,3 +116,4 @@ class GameScene: SKScene {
         // Called before each frame is rendered
     }
 }
+

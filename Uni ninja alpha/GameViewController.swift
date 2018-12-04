@@ -1,19 +1,25 @@
-//
-//  GameViewController.swift
-//  Uni ninja alpha
-//
-//  Created by Louis Osmany (s5113237) on 27/11/2018.
-//  Copyright © 2018 Louis Osmany (s5113237). All rights reserved.
-//
-
 import UIKit
 import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
 
+    @IBOutlet weak var sceneView: SKView!
+    
+    let spaceship = SKSpriteNode()
+    
+    var idle = true
+    
+    var node = SKSpriteNode()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        sceneView.isUserInteractionEnabled = true
+        sceneView.isMultipleTouchEnabled = true
+        
+        let scene = SCNScene()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -26,9 +32,7 @@ class GameViewController: UIViewController {
             }
             
             view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
+
         }
     }
 
